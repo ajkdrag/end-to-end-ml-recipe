@@ -1,0 +1,8 @@
+{
+    "job_name": "VARCHAR",
+    "job_type": "VARCHAR",
+    "run_id": "VARCHAR",
+    "start_time": "TIMESTAMP",
+    "end_time": "TIMESTAMP",
+    "status": "VARCHAR"
+}

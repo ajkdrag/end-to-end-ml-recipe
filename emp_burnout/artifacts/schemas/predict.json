@@ -1,0 +1,10 @@
+{
+    "emp_id": "VARCHAR",
+    "date_of_joining": "DATE",
+    "gender": "VARCHAR",
+    "company_type": "VARCHAR",
+    "wfh_setup_available": "VARCHAR",
+    "designation": "REAL",
+    "resource_allocation": "REAL",
+    "mental_fatigue_score": "REAL"
+}

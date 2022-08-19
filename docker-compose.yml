@@ -1,0 +1,92 @@
+version: "3"
+services:
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID}
+      MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}
+    command: server --console-address ":9001" /data
+    networks:
+      - backend
+    volumes:
+      - minio_storage:/data
+  mc:
+    image: minio/mc
+    restart: on-failure
+    environment:
+      BUCKET: ${ML_BUCKET}
+      AWS_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_PWD: ${AWS_SECRET_ACCESS_KEY}
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - "/usr/bin/mc alias set myminio http://minio:9000 $${AWS_ID} $${AWS_PWD};
+        /usr/bin/mc mb --ignore-existing myminio/$${BUCKET};
+        /usr/bin/mc policy set public myminio/$${BUCKET};"
+    networks:
+      - backend
+    depends_on:
+      - minio
+
+  mlflow:
+    # restart: always
+    build: ./mlflow
+    image: mlflow_server
+    expose:
+      - "5000"
+    networks:
+      - frontend
+      - backend
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9000
+      AWS_DEFAULT_REGION: ${AWS_REGION}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    command: mlflow server --backend-store-uri sqlite:///db/backend.db --default-artifact-root s3://${ML_BUCKET} --host 0.0.0.0
+    volumes:
+      - db_storage:/db
+    depends_on:
+      - mc
+  nginx:
+    # restart: always
+    build: ./nginx
+    environment:
+      PROXYPASS: http://mlflow:5000
+    image: nginx_server
+    container_name: nginx_server
+    ports:
+      - "80:80"
+    networks:
+      - frontend
+    entrypoint:
+      - "/entrypoint.sh"
+    command:
+      - "nginx"
+      - "-g"
+      - "daemon off;"
+    depends_on:
+      - mlflow
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  minio_storage:
+    driver_opts:
+      type: none
+      device: ${PWD}/volumes/minio
+      o: bind 
+  db_storage:
+    driver_opts:
+      type: none
+      device: ${PWD}/volumes/mlflow
+      o: bind
+
+
+          

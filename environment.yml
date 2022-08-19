@@ -1,0 +1,21 @@
+name: emp_burnout
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.8.2
+  - matplotlib==3.5.1
+  - seaborn==0.11.2
+  - ipython==8.4.0
+  - pylint==2.14.5
+  - jupyter
+  - black
+  - nb_black
+  - pip
+variables:
+  AWS_ACCESS_KEY_ID: admin
+  AWS_SECRET_ACCESS_KEY: secretpassword
+  AWS_REGION: us-east-1
+  ML_BUCKET: mlflow
+  MLFLOW_S3_ENDPOINT_URL: http://127.0.0.1:9000
+  MLFLOW_TRACKING_URI: http://127.0.0.1:80

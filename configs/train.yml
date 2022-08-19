@@ -1,0 +1,9 @@
+# job settings
+job_name: default_train
+job_type: TrainJob
+
+# log settings
+log_format: standard
+
+# file settings
+data_dir: data/training
