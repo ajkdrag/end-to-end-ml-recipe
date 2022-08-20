@@ -1,6 +1,7 @@
 import logging
 import pandas as pd
 from pathlib import Path
+from emp_burnout.core.jobs import train
 from emp_burnout.database.db_wrapper import create_table, export_table
 from emp_burnout.core.libs.validation import validate
 from emp_burnout.utils import constants
@@ -42,7 +43,7 @@ def ingest_dataset(config, db_conn, training=True):
     archive_old_files(data_dir, config["prev_run_id"])
 
     # 2. Load schema from schema file
-    table = constants.TRAIN_TABLE 
+    table = constants.TRAIN_TABLE
     if not training:
         table = constants.PREDICT_TABLE
     schema = load_schema(table)
@@ -51,7 +52,10 @@ def ingest_dataset(config, db_conn, training=True):
     validate(config)
 
     # 4. Load data into resp. table
-    create_table(db_conn, table, schema)
+    # persist training table, but not prediction table
+    create_table(
+        db_conn, table, schema, drop_existing=(not training)
+    )  
     load_data_to_table(config, db_conn, table, schema.keys())
 
     # 5. Move current csv files to processed dir

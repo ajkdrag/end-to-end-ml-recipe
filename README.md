@@ -14,7 +14,7 @@ conda env create -f environment.yml
 - [x] MLFlow Server setup
 - [x] Training Job
 - [x] Batch prediction Job
-- [ ] Single input prediction Job
+- [x] Single input prediction Job
 - [ ] Cleanup
 - [ ] REST APIs
 - [ ] Update README

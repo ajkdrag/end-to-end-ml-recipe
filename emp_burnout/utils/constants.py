@@ -11,7 +11,7 @@ TRAIN_TABLE = "train"
 PREDICT_TABLE = "predict"
 
 # logging configs
-LOG_FILENAME = "runs.log"
+LOG_FILENAME = "logs/runs.log"
 LOG_EXTRA_ARGS = {}
 LOG_CONFIG = {
     "version": 1,
@@ -41,10 +41,12 @@ LOG_CONFIG = {
             "filename": LOG_FILENAME,
             "formatter": "standard",  # can change to default/json
             "backupCount": 2,
+            "delay": True # only creates file if there's something to write to
         },
     },
     "root": {
         "level": "INFO",
-        "handlers": ["console"],  # can change to logfile
+        "handlers": ["console"], # can change to logfile
+        "propagate": False  
     },
 }
