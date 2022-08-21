@@ -4,7 +4,7 @@ import logging
 
 from pathlib import Path
 from sklearn.model_selection import train_test_split
-
+from dataclasses import dataclass
 
 from . import BaseJob
 from ..libs.tracking import ModelTracker
@@ -18,6 +18,7 @@ from ...utils import constants
 LOG = logging.getLogger(__name__)
 
 
+@dataclass
 class TrainJob(BaseJob):
     def __post_init__(self):
         super().__post_init__()

@@ -17,5 +17,6 @@ variables:
   AWS_SECRET_ACCESS_KEY: secretpassword
   AWS_REGION: us-east-1
   ML_BUCKET: mlflow
-  MLFLOW_S3_ENDPOINT_URL: http://127.0.0.1:9000
   MLFLOW_TRACKING_URI: http://127.0.0.1:80
+  # needed for client side
+  MLFLOW_S3_ENDPOINT_URL: http://127.0.0.1:9000

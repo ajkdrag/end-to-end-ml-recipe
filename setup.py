@@ -14,7 +14,9 @@ setup(
         "xgboost==1.5.0",
         "seaborn==0.11.2",
         "PyYAML==6.0",
-        "mlflow==1.28"
+        "mlflow==1.28",
+        "fastapi",
+        "uvicorn[standard]"
     ],
     setup_requires=["flake8"],
 )

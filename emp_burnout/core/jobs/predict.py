@@ -4,6 +4,7 @@ import pandas as pd
 
 from pathlib import Path
 from pandas import DataFrame
+from dataclasses import dataclass
 from . import BaseJob
 from ..libs.preprocessing import Preprocessor
 from ..ingestion.ingest import ingest_dataset
@@ -14,6 +15,7 @@ from ...utils import constants
 LOG = logging.getLogger(__name__)
 
 
+@dataclass
 class PredictJob(BaseJob):
     df: DataFrame = None
 
@@ -40,15 +42,16 @@ class PredictJob(BaseJob):
         model = load_obj(next(Path(constants.MODEL_DIR).iterdir()))[1]
 
         # predict
-        y = model.predict(X) if len(X) > 0 else []
-        result = pd.DataFrame({"prediction": y})
+        y = model.predict(X).tolist() if len(X) > 0 else []
+        results = {"burn_rate": y}
 
         # save predictions
         if self.save_results:
             save_file = Path(self.config["data_dir"]) / "results" / "predictions.csv"
             save_file.parent.mkdir(exist_ok=True, parents=True)
-            result.to_csv(save_file, header=True, index=False)
+            pd.DataFrame(results).to_csv(save_file, header=True, index=False)
             LOG.info("Saved prediction results to : %s", save_file)
 
         LOG.info("Finished Prediction job.")
-        return result
+        print(results, type(results))
+        return results

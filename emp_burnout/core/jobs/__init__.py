@@ -41,7 +41,7 @@ class BaseJob:
         job_ctrl_schema = load_schema(constants.JOB_CTRL_TABLE)
         # TODO: remove arg drop_existing during call
         create_table(
-            self.db_conn, constants.JOB_CTRL_TABLE, job_ctrl_schema, drop_existing=True
+            self.db_conn, constants.JOB_CTRL_TABLE, job_ctrl_schema 
         )
 
         # update job control table with start time
@@ -73,8 +73,9 @@ class BaseJob:
     def run(self):
         self._mark_start()
         try:
-            self._run()
+            results = self._run()
             status = "succeeded"
+            return results
         except Exception:
             status = "failed"
             raise

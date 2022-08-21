@@ -8,4 +8,4 @@ log_format: standard
 # file settings
 data_dir: data/training
 
-track: False
+track: True

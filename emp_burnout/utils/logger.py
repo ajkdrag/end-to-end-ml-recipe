@@ -78,15 +78,17 @@ class JsonFormatter(BaseFormatter):
 class Logger(metaclass=Singleton):
     log_config: dict
     job_config: dict
-    
+
     def setup(self):
         for _ in find_keys(
-            self.log_config, key="formatter", new_val=self.job_config["log_format"]
+            self.log_config,
+            key="formatter",
+            new_val=self.job_config.get("log_format", "standard"),
         ):
             pass
         extra_args = {
             "job_name": self.job_config["job_name"],
-            "run_id": self.job_config["run_id"]
+            "run_id": self.job_config["run_id"],
         }
         self.update_extra_args(extra_args)
         LOG.info("Logging setup completed.")

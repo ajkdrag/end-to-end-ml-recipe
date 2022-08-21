@@ -16,5 +16,5 @@ conda env create -f environment.yml
 - [x] Batch prediction Job
 - [x] Single input prediction Job
 - [ ] Cleanup
-- [ ] REST APIs
+- [x] REST APIs
 - [ ] Update README
