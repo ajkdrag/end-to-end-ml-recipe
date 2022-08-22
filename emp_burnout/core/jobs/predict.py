@@ -53,5 +53,4 @@ class PredictJob(BaseJob):
             LOG.info("Saved prediction results to : %s", save_file)
 
         LOG.info("Finished Prediction job.")
-        print(results, type(results))
         return results

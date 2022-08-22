@@ -1,3 +1,5 @@
+import os
+import time
 import shutil
 import pickle
 from pathlib import Path
@@ -31,3 +33,18 @@ def save_obj(obj, tgt_file: Path, empty_dir=False):
 def load_obj(src_file: Path):
     with src_file.open("rb") as stream:
         return pickle.load(stream)
+
+
+def remove_old_subdirs(src_dir: Path, num_days=86400*7):
+    now = time.time()
+    removed = 0
+    for el in src_dir.iterdir():
+        if el.is_dir():
+            timestamp = os.path.getmtime(el)
+            if now - num_days > timestamp:
+                try:
+                    shutil.rmtree(el)  #uncomment to use
+                    removed += 1
+                except Exception as exc:
+                    pass
+    return removed

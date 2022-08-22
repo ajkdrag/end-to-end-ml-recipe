@@ -4,8 +4,11 @@ job_type: PredictJob
 
 # log settings
 log_format: standard
+log_output:
+  - console
+  - logfile
 
 # file settings
 data_dir: data/prediction
 
-save_results: True
+save_results: False

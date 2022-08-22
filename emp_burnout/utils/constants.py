@@ -13,6 +13,7 @@ PREDICT_TABLE = "predict"
 # logging configs
 LOG_FILENAME = "logs/runs.log"
 LOG_EXTRA_ARGS = {}
+LOG_HANDLERS = ["console"]  # can change to logfile
 LOG_CONFIG = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -46,7 +47,7 @@ LOG_CONFIG = {
     },
     "root": {
         "level": "INFO",
-        "handlers": ["console"], # can change to logfile
+        "handlers": LOG_HANDLERS,
         "propagate": False  
     },
 }

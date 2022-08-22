@@ -1,12 +1,11 @@
 import logging
 import pandas as pd
 from pathlib import Path
-from emp_burnout.core.jobs import train
 from emp_burnout.database.db_wrapper import create_table, export_table
 from emp_burnout.core.libs.validation import validate
 from emp_burnout.utils import constants
 from emp_burnout.utils.general import load_schema
-from emp_burnout.utils.io import move_files
+from emp_burnout.utils.io import move_files, remove_old_subdirs
 
 LOG = logging.getLogger(__name__)
 
@@ -19,6 +18,10 @@ def archive_old_files(data_dir, prev_run_id):
         dest_path = Path(data_dir) / "archives" / f"{prev_run_id}_{folder}"
         num_archived = move_files(folder_path, dest_path)
         LOG.info("Archived %s files from folder: %s.", num_archived, folder)
+
+    # remove old archives
+    removed = remove_old_subdirs(Path(data_dir) / "archives", num_days=86400*2)
+    LOG.info("Removed %s old archives.", removed)
 
 
 def load_file_to_table(file_path, db_conn, table_name, columns):

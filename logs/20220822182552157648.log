@@ -1,0 +1,36 @@
+2022-08-22 18:25:52 | default_train | logger | update_extra_args | INFO | Updated logs with extra args: {'job_name': 'default_train'}
+2022-08-22 18:25:52 | default_train | logger | setup | INFO | Logging setup completed.
+2022-08-22 18:25:52 | default_train | db_wrapper | create_connection | INFO | Connecting to databse: emp_burnout/artifacts/dbs/emp_burnout.db
+2022-08-22 18:25:52 | default_train | db_wrapper | create_connection | INFO | Opened emp_burnout database successfully.
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: select coalesce(max(run_id), :curr_run_id) from job_ctrl where run_id < :curr_run_id and job_type = :job_type
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: SELECT count(name) FROM sqlite_master WHERE type = :type AND name = :tbl
+2022-08-22 18:25:52 | default_train | db_wrapper | create_table | INFO | Table job_ctrl already exists.
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: PRAGMA table_info(job_ctrl)
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: INSERT INTO job_ctrl ( job_name,job_type,run_id,start_time,status ) VALUES ( ?, ?, ?, ?, ? )
+2022-08-22 18:25:52 | default_train | train | _run | INFO | Running Train job...
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archiving old rejects files.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archived 0 files from folder: rejects.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archiving old cleaned files.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archived 1 files from folder: cleaned.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archiving old processed files.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archived 0 files from folder: processed.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archiving old results files.
+2022-08-22 18:25:52 | default_train | ingest | archive_old_files | INFO | Archived 0 files from folder: results.
+2022-08-22 18:25:52 | default_train | validation | validate | INFO | Successfully validated 0 files.
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: SELECT count(name) FROM sqlite_master WHERE type = :type AND name = :tbl
+2022-08-22 18:25:52 | default_train | db_wrapper | create_table | INFO | Table train already exists.
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: PRAGMA table_info(train)
+2022-08-22 18:25:52 | default_train | db_wrapper | run_sql | INFO | Running sql: SELECT * FROM train
+2022-08-22 18:25:52 | default_train | preprocessing | scale_features | INFO | Saved scaler to emp_burnout/artifacts/extras/scaler.pkl
+2022-08-22 18:25:53 | default_train | model_selection | get_best_model | INFO | linear_regression tuned. Best params: {}
+2022-08-22 18:25:53 | default_train | model_selection | get_best_model | INFO | linear_regression metrics: {'r2_score': 0.8711772926906419, 'mse': 0.005058370550463442}
+2022-08-22 18:25:53 | default_train | model_selection | get_best_model | INFO | ridge tuned. Best params: {'alpha': 1.0}
+2022-08-22 18:25:53 | default_train | model_selection | get_best_model | INFO | ridge metrics: {'r2_score': 0.8711769752559504, 'mse': 0.005058383014898704}
+2022-08-22 18:25:53 | default_train | model_selection | get_best_model | INFO | lasso tuned. Best params: {'alpha': 0.8, 'selection': 'cyclic'}
+2022-08-22 18:25:53 | default_train | model_selection | get_best_model | INFO | lasso metrics: {'r2_score': -0.0002124134520677945, 'mse': 0.039274481355713375}
+2022-08-22 18:26:05 | default_train | model_selection | get_best_model | INFO | xgboost tuned. Best params: {'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 50}
+2022-08-22 18:26:05 | default_train | model_selection | get_best_model | INFO | xgboost metrics: {'r2_score': 0.908195994921567, 'mse': 0.0036047889801614805}
+2022-08-22 18:26:12 | default_train | model_selection | get_best_model | INFO | random_forest tuned. Best params: {'max_depth': 5, 'n_estimators': 50}
+2022-08-22 18:26:13 | default_train | model_selection | get_best_model | INFO | random_forest metrics: {'r2_score': 0.8873441205852306, 'mse': 0.004423561611694482}
+2022-08-22 18:26:13 | default_train | train | _run | INFO | Tracking params, metrics and artifacts for run: 20220822182552157648
+2022-08-22 18:26:13 | default_train | connectionpool | urlopen | WARNING | Retrying (Retry(total=4, connect=4, read=5, redirect=5, status=5)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff6dae60c40>: Failed to establish a new connection: [Errno 111] Connection refused')': /api/2.0/mlflow/experiments/get-by-name?experiment_name=emp_burnout

@@ -1,0 +1,239 @@
+{
+    "created": "2022-08-22 18:40:47",
+    "module": "logger",
+    "funcName": "update_handlers",
+    "levelname": "INFO",
+    "message": "Updated default handlers with: ['logfile']"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "logger",
+    "funcName": "update_extra_args",
+    "levelname": "INFO",
+    "message": "Updated logs with extra args: {'job_name': 'default_predict'}"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "logger",
+    "funcName": "setup",
+    "levelname": "INFO",
+    "message": "Logging setup completed."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "create_connection",
+    "levelname": "INFO",
+    "message": "Connecting to databse: emp_burnout/artifacts/dbs/emp_burnout.db"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "create_connection",
+    "levelname": "INFO",
+    "message": "Opened emp_burnout database successfully."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: select coalesce(max(run_id), :curr_run_id) from job_ctrl where run_id < :curr_run_id and job_type = :job_type"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: SELECT count(name) FROM sqlite_master WHERE type = :type AND name = :tbl"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "create_table",
+    "levelname": "INFO",
+    "message": "Table job_ctrl already exists."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: PRAGMA table_info(job_ctrl)"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: INSERT INTO job_ctrl ( job_name,job_type,run_id,start_time,status ) VALUES ( ?, ?, ?, ?, ? )"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "predict",
+    "funcName": "_run",
+    "levelname": "INFO",
+    "message": "Running Predict job..."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archiving old rejects files."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archived 0 files from folder: rejects."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archiving old cleaned files."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archived 1 files from folder: cleaned."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archiving old processed files."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archived 0 files from folder: processed."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archiving old results files."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "ingest",
+    "funcName": "archive_old_files",
+    "levelname": "INFO",
+    "message": "Archived 0 files from folder: results."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "validation",
+    "funcName": "validate",
+    "levelname": "INFO",
+    "message": "Successfully validated 0 files."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: DROP TABLE IF EXISTS predict;"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: SELECT count(name) FROM sqlite_master WHERE type = :type AND name = :tbl"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "create_table",
+    "levelname": "INFO",
+    "message": "Table predict doesn't exist. Creating..."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: CREATE TABLE predict ( emp_id varchar,date_of_joining date,gender varchar,company_type varchar,wfh_setup_available varchar,designation real,resource_allocation real,mental_fatigue_score real )"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "create_table",
+    "levelname": "INFO",
+    "message": "Successfully created table predict."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: SELECT * FROM predict"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "preprocessing",
+    "funcName": "scale_features",
+    "levelname": "INFO",
+    "message": "Loaded scaler from emp_burnout/artifacts/extras/scaler.pkl"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "predict",
+    "funcName": "_run",
+    "levelname": "INFO",
+    "message": "Finished Prediction job."
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "db_wrapper",
+    "funcName": "run_sql",
+    "levelname": "INFO",
+    "message": "Running sql: UPDATE job_ctrl SET end_time = ?, status = ? WHERE run_id = ?"
+}
+{
+    "created": "2022-08-22 18:40:47",
+    "job_name": "default_predict",
+    "module": "launcher",
+    "funcName": "<module>",
+    "levelname": "INFO",
+    "message": "Results: {'burn_rate': []}"
+}

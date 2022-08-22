@@ -21,6 +21,16 @@ def gen_run_id():
     return f"{date}{curr_time}{rng}"
 
 
+def dict_replace_multiple(dict_, list_keys, list_new_vals):
+    for k, v in zip(list_keys, list_new_vals):
+        for _ in find_keys(
+                dict_,
+                key=k,
+                new_val=v,
+            ):
+                pass
+
+
 def find_keys(node, key, new_val=None):
     if isinstance(node, list):
         for i in node:

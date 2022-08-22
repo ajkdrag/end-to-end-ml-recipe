@@ -1,0 +1,30 @@
+2022-08-22 18:41:43 | logger | update_handlers | INFO | Updated default handlers with: ['console', 'logfile']
+2022-08-22 18:41:43 | default_predict | logger | update_extra_args | INFO | Updated logs with extra args: {'job_name': 'default_predict'}
+2022-08-22 18:41:43 | default_predict | logger | setup | INFO | Logging setup completed.
+2022-08-22 18:41:43 | default_predict | db_wrapper | create_connection | INFO | Connecting to databse: emp_burnout/artifacts/dbs/emp_burnout.db
+2022-08-22 18:41:43 | default_predict | db_wrapper | create_connection | INFO | Opened emp_burnout database successfully.
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: select coalesce(max(run_id), :curr_run_id) from job_ctrl where run_id < :curr_run_id and job_type = :job_type
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: SELECT count(name) FROM sqlite_master WHERE type = :type AND name = :tbl
+2022-08-22 18:41:43 | default_predict | db_wrapper | create_table | INFO | Table job_ctrl already exists.
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: PRAGMA table_info(job_ctrl)
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: INSERT INTO job_ctrl ( job_name,job_type,run_id,start_time,status ) VALUES ( ?, ?, ?, ?, ? )
+2022-08-22 18:41:43 | default_predict | predict | _run | INFO | Running Predict job...
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archiving old rejects files.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archived 0 files from folder: rejects.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archiving old cleaned files.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archived 1 files from folder: cleaned.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archiving old processed files.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archived 0 files from folder: processed.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archiving old results files.
+2022-08-22 18:41:43 | default_predict | ingest | archive_old_files | INFO | Archived 0 files from folder: results.
+2022-08-22 18:41:43 | default_predict | validation | validate | INFO | Successfully validated 0 files.
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: DROP TABLE IF EXISTS predict;
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: SELECT count(name) FROM sqlite_master WHERE type = :type AND name = :tbl
+2022-08-22 18:41:43 | default_predict | db_wrapper | create_table | INFO | Table predict doesn't exist. Creating...
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: CREATE TABLE predict ( emp_id varchar,date_of_joining date,gender varchar,company_type varchar,wfh_setup_available varchar,designation real,resource_allocation real,mental_fatigue_score real )
+2022-08-22 18:41:43 | default_predict | db_wrapper | create_table | INFO | Successfully created table predict.
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: SELECT * FROM predict
+2022-08-22 18:41:43 | default_predict | preprocessing | scale_features | INFO | Loaded scaler from emp_burnout/artifacts/extras/scaler.pkl
+2022-08-22 18:41:43 | default_predict | predict | _run | INFO | Finished Prediction job.
+2022-08-22 18:41:43 | default_predict | db_wrapper | run_sql | INFO | Running sql: UPDATE job_ctrl SET end_time = ?, status = ? WHERE run_id = ?
+2022-08-22 18:41:43 | default_predict | launcher | <module> | INFO | Results: {'burn_rate': []}

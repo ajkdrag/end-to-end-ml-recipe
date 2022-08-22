@@ -5,7 +5,7 @@ import logging.config
 from typing import Dict
 from dataclasses import dataclass
 from emp_burnout.utils import constants
-from emp_burnout.utils.general import find_keys
+from emp_burnout.utils.general import dict_replace_multiple
 
 
 LOG = logging.getLogger(__name__)
@@ -80,16 +80,15 @@ class Logger(metaclass=Singleton):
     job_config: dict
 
     def setup(self):
-        for _ in find_keys(
-            self.log_config,
-            key="formatter",
-            new_val=self.job_config.get("log_format", "standard"),
-        ):
-            pass
+        keys = ["formatter", "filename"]
+        vals = [self.job_config.get("log_format", "standard"), f"logs/{self.job_config['run_id']}.log"]
+        dict_replace_multiple(self.log_config, keys, vals) 
+
         extra_args = {
             "job_name": self.job_config["job_name"],
-            "run_id": self.job_config["run_id"],
         }
+        handlers = self.job_config.get("log_output", ["console"])
+        self.update_handlers(handlers)
         self.update_extra_args(extra_args)
         LOG.info("Logging setup completed.")
 
@@ -97,3 +96,9 @@ class Logger(metaclass=Singleton):
         constants.LOG_EXTRA_ARGS.update(extra_args)
         logging.config.dictConfig(self.log_config)
         LOG.info("Updated logs with extra args: %s", extra_args)
+
+    def update_handlers(self, handlers: list):
+        constants.LOG_HANDLERS.clear()
+        constants.LOG_HANDLERS += handlers
+        logging.config.dictConfig(self.log_config)
+        LOG.info("Updated default handlers with: %s", handlers)
