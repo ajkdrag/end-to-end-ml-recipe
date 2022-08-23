@@ -10,18 +10,19 @@ from emp_burnout.database.db_wrapper import (
     run_sql,
 )
 from emp_burnout.utils.general import load_schema
+from emp_burnout.core.parser.cfg_model import Config
 
 
 @dataclass
 class BaseJob:
-    config: dict
+    config: Config
 
     def __post_init__(self):
-        self.job_name = self.config["job_name"]
-        self.job_type = self.config["job_type"]
-        self.run_id = self.config["run_id"]
+        self.job_name = self.config.job_name
+        self.job_type = self.config.job_type
+        self.run_id = self.config.run_id
         self.db_conn = create_connection(constants.DB_NAME)
-        self.config["prev_run_id"] = BaseJob._get_prev_run_id(
+        self.config.prev_run_id = BaseJob._get_prev_run_id(
             self.db_conn, constants.JOB_CTRL_TABLE, self.run_id, self.job_type
         )
 

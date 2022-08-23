@@ -20,11 +20,10 @@ model_classes = {
 
 @dataclass
 class ModelSelector:
-    config: dict
+    hyps: dict 
 
     def get_best_model(self, train_x, train_y, test_x, test_y):
-        hyps = self.config["hyps"]
-        models = hyps["models"]
+        models = self.hyps["models"]
 
         # training
         model_scores = []
@@ -51,5 +50,5 @@ class ModelSelector:
             LOG.info("%s metrics: %s", name, metrics)
             model_scores.append((name, tuned_model, grid.best_params_, metrics))
 
-        criterion = hyps["sel_criterion"]
+        criterion = self.hyps["sel_criterion"]
         return max(model_scores, key=lambda el: el[-1][criterion])

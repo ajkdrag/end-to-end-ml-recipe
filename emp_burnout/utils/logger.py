@@ -6,6 +6,7 @@ from typing import Dict
 from dataclasses import dataclass
 from emp_burnout.utils import constants
 from emp_burnout.utils.general import dict_replace_multiple
+from emp_burnout.core.parser.cfg_model import Config
 
 
 LOG = logging.getLogger(__name__)
@@ -77,18 +78,17 @@ class JsonFormatter(BaseFormatter):
 @dataclass
 class Logger(metaclass=Singleton):
     log_config: dict
-    job_config: dict
+    job_config: Config
 
     def setup(self):
         keys = ["formatter", "filename"]
-        vals = [self.job_config.get("log_format", "standard"), f"logs/{self.job_config['run_id']}.log"]
+        vals = [self.job_config.log_format, f"logs/{self.job_config.run_id}.log"]
         dict_replace_multiple(self.log_config, keys, vals) 
 
         extra_args = {
-            "job_name": self.job_config["job_name"],
+            "job_name": self.job_config.job_name,
         }
-        handlers = self.job_config.get("log_output", ["console"])
-        self.update_handlers(handlers)
+        self.update_handlers(self.job_config.log_output)
         self.update_extra_args(extra_args)
         LOG.info("Logging setup completed.")
 

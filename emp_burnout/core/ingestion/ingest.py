@@ -1,6 +1,7 @@
 import logging
 import pandas as pd
 from pathlib import Path
+from emp_burnout.core.parser.cfg_model import Config
 from emp_burnout.database.db_wrapper import create_table, export_table
 from emp_burnout.core.libs.validation import validate
 from emp_burnout.utils import constants
@@ -30,20 +31,19 @@ def load_file_to_table(file_path, db_conn, table_name, columns):
     LOG.info("Successfully loaded %s rows into table: %s", len(df), table_name)
 
 
-def load_data_to_table(config, db_conn, table_name, columns):
-    datasets_dir = Path(config["data_dir"]) / "datasets"
+def load_data_to_table(datasets_dir: Path, db_conn, table_name, columns):
     for file_ in datasets_dir.iterdir():
         load_file_to_table(file_, db_conn, table_name, columns)
 
 
-def ingest_dataset(config, db_conn, training=True):
-    data_dir = config["data_dir"]
+def ingest_dataset(config: Config, db_conn, training=True):
+    data_dir = config.data_dir
     datasets_dir = Path(data_dir) / "datasets"
     processed_dir = Path(data_dir) / "processed"
     cleaned_dir = Path(data_dir) / "cleaned"
 
     # 1. Archive old files
-    archive_old_files(data_dir, config["prev_run_id"])
+    archive_old_files(data_dir, config.prev_run_id)
 
     # 2. Load schema from schema file
     table = constants.TRAIN_TABLE
@@ -52,14 +52,14 @@ def ingest_dataset(config, db_conn, training=True):
     schema = load_schema(table)
 
     # 3. Validate current csv file
-    validate(config)
+    validate(datasets_dir)
 
     # 4. Load data into resp. table
     # persist training table, but not prediction table
     create_table(
         db_conn, table, schema, drop_existing=(not training)
     )  
-    load_data_to_table(config, db_conn, table, schema.keys())
+    load_data_to_table(datasets_dir, db_conn, table, schema.keys())
 
     # 5. Move current csv files to processed dir
     move_files(datasets_dir, processed_dir)

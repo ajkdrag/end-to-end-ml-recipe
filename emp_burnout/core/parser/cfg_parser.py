@@ -1,11 +1,10 @@
 import yaml
+from .cfg_model import Config
 
 
-def load_config(config_file):
+def load_config(config_file, validate=True):
     with open(config_file) as stream:
-        return yaml.safe_load(stream)
-
-
-def validate_config(config):
-    pass
-
+        config = yaml.safe_load(stream)
+        if validate:
+            config = Config.parse_obj(config)
+        return config

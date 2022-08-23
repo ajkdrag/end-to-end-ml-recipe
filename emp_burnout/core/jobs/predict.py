@@ -1,4 +1,3 @@
-import os
 import logging
 import pandas as pd
 
@@ -21,18 +20,18 @@ class PredictJob(BaseJob):
 
     def __post_init__(self):
         super().__post_init__()
-        self.save_results = self.config.get("save_results", True)
+        self.save_results = self.config.save_results
 
     def _run(self):
         super()._run()
         LOG.info("Running Predict job...")
-        preprocessor = Preprocessor(self.config)
+        preprocessor = Preprocessor()
 
         # ingest and load df
         if self.df is None:
             ingest_dataset(self.config, self.db_conn, training=False)
             self.df = pd.read_csv(
-                os.path.join(self.config["data_dir"], "cleaned", "predict.csv")
+                Path(self.config.data_dir) / "cleaned" /"predict.csv"
             )
         
         # preprocess
@@ -47,7 +46,7 @@ class PredictJob(BaseJob):
 
         # save predictions
         if self.save_results:
-            save_file = Path(self.config["data_dir"]) / "results" / "predictions.csv"
+            save_file = Path(self.config.data_dir) / "results" / "predictions.csv"
             save_file.parent.mkdir(exist_ok=True, parents=True)
             pd.DataFrame(results).to_csv(save_file, header=True, index=False)
             LOG.info("Saved prediction results to : %s", save_file)

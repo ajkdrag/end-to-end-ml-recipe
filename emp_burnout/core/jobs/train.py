@@ -1,10 +1,8 @@
-import os
-import pandas as pd
 import logging
+import pandas as pd
 
 from pathlib import Path
 from sklearn.model_selection import train_test_split
-from dataclasses import dataclass
 
 from . import BaseJob
 from ..libs.tracking import ModelTracker
@@ -18,21 +16,16 @@ from ...utils import constants
 LOG = logging.getLogger(__name__)
 
 
-@dataclass
 class TrainJob(BaseJob):
-    def __post_init__(self):
-        super().__post_init__()
-        self.track = self.config.get("track", False)
-
     def _run(self):
         super()._run()
         LOG.info("Running Train job...")
-        preprocessor = Preprocessor(self.config)
-        model_selector = ModelSelector(self.config)
+        preprocessor = Preprocessor()
+        model_selector = ModelSelector(self.config.hyps)
 
         # ingest and load df
         ingest_dataset(self.config, self.db_conn)
-        df = pd.read_csv(os.path.join(self.config["data_dir"], "cleaned", "train.csv"))
+        df = pd.read_csv(Path(self.config.data_dir) / "cleaned" / "train.csv")
 
         # preprocess
         X, y = preprocessor.preprocess(df)
@@ -57,9 +50,9 @@ class TrainJob(BaseJob):
         )
 
         # track run
-        if self.track:
+        if self.config.track:
             LOG.info("Tracking params, metrics and artifacts for run: %s", self.run_id)
-            model_tracker = ModelTracker(self.config, "emp_burnout")
+            model_tracker = ModelTracker(exp="emp_burnout", run_id=self.run_id)
             model_tracker.track_model_params(params, name=self.run_id)
             model_tracker.track_model_metrics(best_model[-1], name=self.run_id)
             model_tracker.track_model_artifacts(constants.MODEL_DIR, name=self.run_id)

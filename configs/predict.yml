@@ -3,7 +3,7 @@ job_name: default_predict
 job_type: PredictJob
 
 # log settings
-log_format: standard
+log_format: json
 log_output:
   - console
   - logfile
@@ -11,4 +11,5 @@ log_output:
 # file settings
 data_dir: data/prediction
 
+# results settings
 save_results: False

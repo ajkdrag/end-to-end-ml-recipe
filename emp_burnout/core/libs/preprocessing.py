@@ -3,19 +3,15 @@ import pandas as pd
 import logging
 
 from pathlib import Path
-from emp_burnout.utils.io import load_obj, save_obj
+from ...utils.io import load_obj, save_obj
 from ...utils import constants
-from dataclasses import dataclass
 from sklearn.preprocessing import StandardScaler
 
 
 LOG = logging.getLogger(__name__)
 
 
-@dataclass
 class Preprocessor:
-    config: dict
-    
     def load_trainset_cols(self):
         with (Path(constants.SCHEMAS_DIR) / "columns.json").open() as stream:
             return json.load(stream)

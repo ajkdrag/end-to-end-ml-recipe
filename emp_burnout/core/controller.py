@@ -1,12 +1,14 @@
-from dataclasses import dataclass
 from typing import Optional
+from dataclasses import dataclass
+
 from .jobs.train import TrainJob
 from .jobs.predict import PredictJob
+from emp_burnout.core.parser.cfg_model import Config
 
 
 @dataclass
 class JobController:
-    config: dict
+    config: Config
     kwargs: Optional[dict] = None
 
     def _get_job_from_job_type(self, job_type):
@@ -21,6 +23,5 @@ class JobController:
         return job
 
     def run(self):
-        job_type = self.config["job_type"]
-        job = self._get_job_from_job_type(job_type)
+        job = self._get_job_from_job_type(self.config.job_type)
         return job.run()
