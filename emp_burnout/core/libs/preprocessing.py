@@ -53,6 +53,7 @@ class Preprocessor:
         df["join_day"] = df["date_of_joining"].apply(lambda x: x.day)
         df.drop("date_of_joining", axis=1, inplace=True)
 
+        # TODO: Use label encoder / dummy encoding for company type, gender and wfh setup
         df["gender"] = df["gender"].replace({'Female': 0, 'Male': 1})
         df["company_type"] = df["company_type"].replace({'Product': 0, 'Service': 1})
         df["wfh_setup_available"] = df["wfh_setup_available"].replace({'No': 0, 'Yes': 1})
